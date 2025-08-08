@@ -15,7 +15,7 @@ SemanticCoreDB 是一个全新的数据库系统，摒弃传统存储引擎和�
 ## 项目结构
 
 ```
-llm-database/
+SemanticCoreDB/
 ├── docs/                    # 技术文档
 │   ├── whitepaper/         # 技术白皮书
 │   ├── api/                # API 文档
@@ -45,7 +45,7 @@ llm-database/
 ```bash
 # 克隆项目
 git clone <repository-url>
-cd llm-database
+cd SemanticCoreDB
 
 # 安装 Python 依赖
 pip install -r requirements.txt
