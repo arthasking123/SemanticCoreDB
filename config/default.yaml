@@ -1,0 +1,107 @@
+# SemanticCoreDB 默认配置文件
+
+# 存储配置
+storage:
+  data_dir: "data"
+  event_log_dir: "data/events"
+  object_store_dir: "data/objects"
+  vector_index_dir: "data/vectors"
+  metadata_graph_dir: "data/metadata"
+  chunk_size: 1048576  # 1MB
+  max_file_size: 104857600  # 100MB
+  compression_enabled: true
+  cache_size: 1000
+  cache_ttl: 3600  # 1小时
+
+# 语义处理配置
+semantic:
+  # 默认LLM提供商
+  llm_provider: "local"  # openai, anthropic, local, mock
+  
+  # OpenAI 配置
+  openai:
+    model: "gpt-3.5-turbo"
+    api_key: ""  # 从环境变量获取
+    max_tokens: 1000
+    temperature: 0.1
+    timeout: 30
+    retry_attempts: 3
+    retry_delay: 1.0
+  
+  # Anthropic 配置
+  anthropic:
+    model: "claude-3-sonnet-20240229"
+    api_key: ""  # 从环境变量获取
+    max_tokens: 1000
+    timeout: 30
+    retry_attempts: 3
+    retry_delay: 1.0
+  
+  # 本地 LLM 配置
+  local:
+    base_url: "http://localhost:11434"  # Ollama 默认地址
+    model: "Qwen2.5-Coder:7b"
+    timeout: 60
+    max_tokens: 1000
+    retry_attempts: 3
+    retry_delay: 1.0
+  
+  # 降级策略配置
+  fallback_enabled: true
+  
+  # 向量模型配置
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+  embedding_dimension: 384
+  
+  # 向量索引配置
+  vector_index_type: "faiss"  # faiss, annoy, hnsw
+  vector_index_params:
+    nlist: 100
+    nprobe: 10
+  
+  # 语义匹配配置
+  semantic_threshold: 0.5
+  max_semantic_results: 100
+
+# 查询配置
+query:
+  enable_natural_language: true
+  enable_sql_plus: true
+  query_timeout: 30  # 秒
+  max_query_complexity: 1000
+  default_limit: 100
+  max_limit: 1000
+
+# API 配置
+api:
+  host: "localhost"
+  port: 8000
+  debug: false
+  enable_auth: false
+  jwt_secret: ""  # 从环境变量获取
+  rate_limit: 1000  # 每分钟请求数
+  rate_limit_window: 60  # 秒
+
+# 日志配置
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/semanticcoredb.log"
+  max_size: 10485760  # 10MB
+  backup_count: 5
+
+# 监控配置
+monitoring:
+  enabled: true
+  metrics_port: 9090
+  health_check_interval: 30  # 秒
+  performance_metrics: true
+
+# 安全配置
+security:
+  enable_ssl: false
+  ssl_cert: ""
+  ssl_key: ""
+  cors_origins: ["*"]
+  api_key_required: false
+  rate_limiting: true

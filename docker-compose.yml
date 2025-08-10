@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  # SemanticCoreDB 主服务
+  semanticcoredb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: semanticcoredb
+    ports:
+      - "8000:8000"
+    environment:
+      - SCDB_HOST=0.0.0.0
+      - SCDB_PORT=8000
+      - SCDB_DEBUG=true
+      - SCDB_LLM_PROVIDER=openai
+      - SCDB_LLM_MODEL=gpt-3.5-turbo
+      - SCDB_LLM_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+    networks:
+      - semanticcoredb-network
+    restart: unless-stopped
+
+networks:
+  semanticcoredb-network:
+    driver: bridge 
